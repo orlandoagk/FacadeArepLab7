@@ -37,13 +37,12 @@ java -cp target/classes:target/dependency/* edu.escuelaing.arep.secureapp.Main
 
 **Yo need to change the Facade ImplService to the new endopoint to consume the OtherSecureApp API to the server that you deploy it** 
 
-### How to use it
-[![Video](https://img.youtube.com/vi/eELPS2OGjHU/0.jpg)](https://www.youtube.com/watch?v=eELPS2OGjHU)
-
 
 ### Test
 1. `mvn test`
 
+## How to use it
+[![Video](https://img.youtube.com/vi/eELPS2OGjHU/0.jpg)](https://www.youtube.com/watch?v=eELPS2OGjHU)
 
 ## Documentation
 To read the documentation of the project you need to enter to the enter the APP folder in the project and search in the Documentation folder, open the Index if you want to have a similar experience to the real Java API documentation
