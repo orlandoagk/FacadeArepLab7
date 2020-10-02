@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         port(433);
         ImplServices implServices = new ImplServices();
-        secure("ecikeystore.p12","prueba","myTrustStore","prueba");
+        secure("keystores/ecikeystore.p12","prueba","keystores/myTrustStore","prueba");
         implServices.ssl();
         get("/",(req,res)->{
             return inputDataPage();

@@ -5,6 +5,12 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import jdk.nashorn.api.scripting.URLReader;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
+import sun.net.www.http.HttpClient;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -18,6 +24,7 @@ import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,9 +33,17 @@ public class ImplServices {
 
     }
 
-    public String makeOperation(String operation,double number) throws UnirestException {
+    public String makeOperation(String operation,double number) throws UnirestException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+        SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustSelfSignedStrategy() {
+            public boolean isTrusted(X509Certificate[] chain, String authType) {
+                return true;
+            }
+        }).build();
+        CloseableHttpClient customHttpClient = HttpClients.custom().setSSLContext(sslContext)
+                .setSSLHostnameVerifier(new NoopHostnameVerifier()).build();
+        Unirest.setHttpClient(customHttpClient);
         HttpResponse<String> jsonResponse
-                = Unirest.post("https://54.159.26.101:433")
+                = Unirest.post("https://localhost:4567")
                 .body("{\"operation\":"+operation+", \"value\":"+number+"}")
                 .asString();
         return jsonResponse.getBody();
@@ -36,9 +51,8 @@ public class ImplServices {
 
     public void ssl(){
         try {
-
             // Create a file and a password representation
-            File trustStoreFile = new File("myTrustStore");
+            File trustStoreFile = new File("keystores/myTrustStore");
             char[] trustStorePassword = "prueba".toCharArray();
 
             // Load the trust store, the default type is "pkcs12", the alternative is "jks"
@@ -62,7 +76,7 @@ public class ImplServices {
             SSLContext sslContext = SSLContext.getInstance("TLS");
             sslContext.init(null, tmf.getTrustManagers(), null);
             SSLContext.setDefault(sslContext);
-
+            javax.net.ssl.HttpsURLConnection.setDefaultHostnameVerifier((hostname, sslSession) -> true);
 
 
         } catch (KeyStoreException ex) {
