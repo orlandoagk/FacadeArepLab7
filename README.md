@@ -1,4 +1,4 @@
-# AREP7 Secures App's
+# AREP7 Secure App's
 
 ## Description
 In this project we build two secure apps, a [FacadeApp](https://github.com/orlandoagk/FacadeArepLab7) that is in this repository and a service that offer a API that the facade consume that is called [OtherSecureApp](https://github.com/orlandoagk/OtherSecureAppArepLab7), the facade have a authentication and authorization control, the OtherSecureApp only have a API that is offered with method POST in the endpoint (/). All the application have a secure channel, thats means that the petitions use http + ssl (https).
@@ -42,7 +42,7 @@ java -cp target/classes:target/dependency/* edu.escuelaing.arep.secureapp.Main
 1. `mvn test`
 
 ## How to use it
-[![Video](https://img.youtube.com/vi/eELPS2OGjHU/0.jpg)](https://www.youtube.com/watch?v=eELPS2OGjHU)
+[![Video](https://img.youtube.com/vi/evrubCa3Zjk/0.jpg)](https://www.youtube.com/watch?v=evrubCa3Zjk)
 
 ## Documentation
 To read the documentation of the project you need to enter to the enter the APP folder in the project and search in the Documentation folder, open the Index if you want to have a similar experience to the real Java API documentation
